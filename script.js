@@ -6,8 +6,8 @@
 //add points if correct
 //deduct time if wrong
 //save score if high score in localStorage
-var qCounter = 1;
-var quizQuestion = [
+var qCounter = 0;
+var quizQuestions = [
   {
     question: "Are you ready to start the quiz?",
     answer1: "no",
@@ -21,7 +21,7 @@ var quizQuestion = [
     answerB: "Global and Local",
     answerC: "Outer and Inner",
     answerD: "Outside and Inside",
-    correctAnswer: answerB
+    correctAnswer: "answerB"
   },
   {
     questionId: 1,
@@ -30,7 +30,7 @@ var quizQuestion = [
     answerB: "Period notation, Square bracket notation",
     answerC: "Equal notation, Abstract notation",
     answerD: "Dot notation, Bracket notation",
-    correctAnswer: answerD
+    correctAnswer: "answerD"
   },
   {
     questionId: 2,
@@ -39,7 +39,7 @@ var quizQuestion = [
     answerB: "JavaScript lets provide the user immediate feedback upon an action.",
     answerC: "JavaScripts handles numbers better than most programming languages.",
     answerD: "Javascript allows developers to create richer interfaces for the users.",
-    correctAnswer: answerC
+    correctAnswer: "answerC"
   },
   {
     questionId: 3,
@@ -48,7 +48,7 @@ var quizQuestion = [
     answerB: "Inside the <link> element",
     answerC: "Inside the <head> element",
     answerD: "Inside the <script> element",
-    correctAnswer: answerD
+    correctAnswer: "answerD"
   },
   {
     questionId: 4,
@@ -57,25 +57,40 @@ var quizQuestion = [
     answerB: "string, num, falsy, bigInt, symbol, undefined",
     answerC: "sentence, int, truthy, bigInt, symbol, undefined",
     answerD: "sentence, float, data, bigInt, symbol, undefined",
-    correctAnswer: answerA
+    correctAnswer: "answerA"
   }
 ];
 
 var startQuestion = function() {
-  //set h2 ele,emt to start question
-  
-  //set radio optiosn for yes and no
+  //set h2 eleemt to start question
+  var h2Label = document.querySelector('#questionH2');
+  h2Label.textContent = (quizQuestions[qCounter].question);
 
+  //set radio options for yes and no
+  var label = document.querySelector('#labelA');
+  label.textContent = (quizQuestions[qCounter].answer1);
+  label = document.querySelector('#labelB');
+  label.textContent = (quizQuestions[qCounter].answer2);
+
+  //hide unused radio elements and labels
+  document.getElementById("C").style.display = "none";
+  document.getElementById("D").style.display = "none";
 }
 
 var quizQuestion = function() {
   //set h2 element here
+  var h2Label = document.querySelector('#questionH2');
+  h2Label.textContent = (quizQuestions[qCounter].question);
 
   //set radio button text here
   var label = document.querySelector('#labelA');
-  label.textContent = (quizQuestion[qCounter].answerA);
-  //label = document.querySelector('#labelB');
-  //label.text
+  label.textContent = (quizQuestions[qCounter].answerA);
+  label = document.querySelector('#labelB');
+  label.textContent = (quizQuestions[qCounter].answerB);
+  label = document.querySelector('#labelC');
+  label.textContent = (quizQuestions[qCounter].answerC);
+  label = document.querySelector('#labelD');
+  label.textContent = (quizQuestions[qCounter].answerD);
 }
 
 var displayQuestion = function () {
@@ -86,7 +101,22 @@ var displayQuestion = function () {
     //set quiz question
     quizQuestion();
   }
-  qCounter++;
 };
 
-displayQuestion();
+var answerQuestion = function () {
+  //load question
+  displayQuestion();
+  if (qCounter === 0){
+    //check if user is ready for the quiz
+    if (document.getElementById('answerA').checked){
+      window.alert("You are not ready, select 'yes' when ready!");
+      return false;
+    }
+    //start timer
+    //timer code HERE
+    //increment question counter
+    qCounter++;
+  }
+};
+
+answerQuestion();
