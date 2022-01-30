@@ -7,6 +7,7 @@
 //deduct time if wrong
 //save score if high score in localStorage
 var qCounter = 0;
+var submitAnwerr = document.querySelector("#save-task");
 var quizQuestions = [
   {
     question: "Are you ready to start the quiz?",
@@ -116,6 +117,17 @@ var answerQuestion = function () {
     //timer code HERE
     //increment question counter
     qCounter++;
+  } else {
+    //load question
+    displayQuestion();
+    //event listener for submit answer button
+    submitAnwerr.addEventListener("submit", checkAnswer);
+    //check if answer is correct
+    var checkAnswer = function () {
+      if (){
+        
+      }
+    }
   }
 };
 
