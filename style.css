@@ -59,13 +59,23 @@ main {
   align-items: center;
 }
 
+.quizForm section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 .quizForm h2 {
   font-size: 1.4em;
   color: var(--grey);
 }
 
 .quizForm div {
-  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .flex {
