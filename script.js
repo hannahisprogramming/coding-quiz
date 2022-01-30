@@ -62,30 +62,27 @@ var quizQuestions = [
 ];
 
 var startQuestion = function() {
-
+  //set h2 ele,emt to start question
+  
+  //set radio optiosn for yes and no
+  
 }
 
 var quizQuestion = function() {
-  var questionH2El = document.createElement("h2");
-  questionH2El.className = "quizForm";
-  questionH2El.innerHTML = quizQuestion[questionCounter][1];
+  //set h2 element here
 
   for (var i = 2; i < quizQuestions[questionCounter].length-1; i++) {
-    var questionRadioEl = document.createElement("input");
-    questionRadioEl.setAttribute("type", "radio");
-    questionRadioEl.value(quizQuestions[questionCounter][i]);
+    //set radio button text here
   };
 }
 
 var displayQuestion = function () {
-  for (var i = 0; i < quizQuestions[i].length-1; i++) {
-    if (quizQuestions[0]){
-      //set ready to start question
-      startQuestion();
-    } else {
-      //set quiz question
-      quizQuestion();
-    }
+  if (quizQuestions[0]){
+    //set ready to start question
+    startQuestion();
+  } else {
+    //set quiz question
+    quizQuestion();
   }
   questionCounter++;
 };
