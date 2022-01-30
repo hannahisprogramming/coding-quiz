@@ -1,0 +1,79 @@
+html {
+  font: 1.1em/1.4 Helvetica, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+:root {
+  --primary: #44e9ff;
+  --secondary: #497980;
+  --tertiary: rgb(192, 246, 253);
+  --white: #ededed;
+  --grey: #333;
+}
+
+body {
+  background: var(--white);
+  color: var(--grey);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header {
+  display: flex;
+  background-color: var(--primary);
+  margin: 10px;
+  padding: 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 1.4em;
+  color: var(--white);
+}
+
+main {
+  background-color: var(--secondary);
+  margin: 20px;
+  padding: 5pz;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.quizForm {
+  background-color: var(--white);
+  margin: 20px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.quizForm h2 {
+  font-size: 1.4em;
+  color: var(--grey);
+}
+
+.quizForm div {
+  
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex > * {
+ flex: 1 1 250px;
+ margin: 10px;
+}
