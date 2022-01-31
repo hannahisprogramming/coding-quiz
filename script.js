@@ -8,7 +8,7 @@
 //save score if high score in localStorage
 var qCounter = 0;
 var score = 0;
-var submitAnswer = document.querySelector("#save-task");
+var submitAnswer = document.querySelector("#submitAn");
 var quizQuestions = [
   {
     question: "Are you ready to start the quiz?",
@@ -108,13 +108,16 @@ var displayQuestion = function () {
 
 //check if answer is correct
 var checkAnswer = function () {
-  if (document.querySelector('input[name="radioGroup"]:checked').value === quizQuestions[qCounter].correctAnswer){
+  if (document.querySelector('input[name="radioGroup"]:checked') === quizQuestions[qCounter-1].correctAnswer){
     //add points to score
     score+=20;
+    //alert - answer is correct (do not show score)
     console.log(score);
   } //else {
     //if incorrect, deduct time from timer
+    //alert - answer is incorrect, time left after deduction is:
   //}
+  answerQuestion();
 }
 
 var endQuiz = function () {
@@ -124,18 +127,13 @@ var endQuiz = function () {
   var divEl = document.createElement("div");
   divEl.className = "endScreen";
   divEl.innerHTML =
-  "<h2 class='endScreen'>You've finished the Quiz!</h2><br /><h3 class='endScreen'>Your score is " + score + "!</h3>";
+  "<h2 class='endScreen'>You've finished the Quiz!</h2><br /><h3 class='endScreen'>Your score is " + (score-=20) + "!</h3>";
 }
 
 var answerQuestion = function () {
-  //load question
-  displayQuestion();
   if (qCounter === 0){
-    //check if user is ready for the quiz
-    if (document.getElementById("answerA").checked){
-      window.alert("You are not ready, select 'yes' when ready!");
-      return false;
-    }
+    //load question
+    displayQuestion();
     //start timer
     //timer code HERE
     //increment question counter
@@ -144,8 +142,6 @@ var answerQuestion = function () {
   } else if (qCounter > 0 && qCounter < quizQuestions.length) {
     //load question
     displayQuestion();
-    //event listener for submit answer button
-    submitAnswer.addEventListener("submit", checkAnswer);
     //increment question counter
     if (qCounter < quizQuestions.length-1) {
       qCounter++;
@@ -156,7 +152,7 @@ var answerQuestion = function () {
     endQuiz();
   }
   //event listener for submit answer button
-  submitAnswer.addEventListener("click", checkAnswer, answerQuestion);
+  submitAnswer.addEventListener("click", checkAnswer);
 };
 
 answerQuestion();
