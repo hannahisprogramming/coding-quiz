@@ -155,7 +155,8 @@ var answerQuestion = function () {
     qCounter = 0;
     endQuiz();
   }
-  answerQuestion();
+  //event listener for submit answer button
+  submitAnswer.addEventListener("click", checkAnswer, answerQuestion);
 };
 
 answerQuestion();
