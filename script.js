@@ -8,6 +8,7 @@
 //save score if high score in localStorage
 var qCounter = 0;
 var score = 0;
+var numberCorrect = 0;
 var submitAnswer = document.querySelector("#submitAn");
 var quizQuestions = [
   {
@@ -22,7 +23,7 @@ var quizQuestions = [
     answerB: "Global and Local",
     answerC: "Outer and Inner",
     answerD: "Outside and Inside",
-    correctAnswer: "answerB"
+    correctAnswer: "Global and Local"
   },
   {
     question: "How do we access a value stored in an object?",
@@ -30,7 +31,7 @@ var quizQuestions = [
     answerB: "Period notation, Square bracket notation",
     answerC: "Equal notation, Abstract notation",
     answerD: "Dot notation, Bracket notation",
-    correctAnswer: "answerD"
+    correctAnswer: "Dot notation, Bracket notation"
   },
   {
     question: "From the reason listed below which is NOT true about JavaScript?",
@@ -38,7 +39,7 @@ var quizQuestions = [
     answerB: "JavaScript lets provide the user immediate feedback upon an action.",
     answerC: "JavaScripts handles numbers better than most programming languages.",
     answerD: "Javascript allows developers to create richer interfaces for the users.",
-    correctAnswer: "answerC"
+    correctAnswer: "JavaScripts handles numbers better than most programming languages."
   },
   {
     question: "Inside the HTML document, where do you place your JavaScript code?",
@@ -46,7 +47,7 @@ var quizQuestions = [
     answerB: "Inside the <link> element",
     answerC: "Inside the <head> element",
     answerD: "Inside the <script> element",
-    correctAnswer: "answerD"
+    correctAnswer: "Inside the <script> element"
   },
   {
     question: "What are the six primitive data types in JavaScript?",
@@ -54,7 +55,7 @@ var quizQuestions = [
     answerB: "string, num, falsy, bigInt, symbol, undefined",
     answerC: "sentence, int, truthy, bigInt, symbol, undefined",
     answerD: "sentence, float, data, bigInt, symbol, undefined",
-    correctAnswer: "answerA"
+    correctAnswer: "string, number, boolean, bigInt, symbol, undefined"
   }
 ];
 
@@ -77,6 +78,10 @@ var startQuestion = function() {
 }
 
 var quizQuestion = function() {
+  //remove display:none from questions C & D
+  document.getElementById("C").style.display = "flex";
+  document.getElementById("D").style.display = "flex";
+
   //set h2 element here
   var h2Label = document.querySelector('#questionH2');
   h2Label.textContent = (quizQuestions[qCounter].question);
@@ -97,6 +102,7 @@ var quizQuestion = function() {
 }
 
 var displayQuestion = function () {
+  console.log(qCounter);
   if (qCounter === 0){
     //set ready to start question
     startQuestion();
@@ -107,17 +113,35 @@ var displayQuestion = function () {
 };
 
 //check if answer is correct
-var checkAnswer = function () {
-  if (document.querySelector('input[name="radioGroup"]:checked') === quizQuestions[qCounter-1].correctAnswer){
-    //add points to score
-    score+=20;
-    //alert - answer is correct (do not show score)
-    console.log(score);
-  } //else {
-    //if incorrect, deduct time from timer
-    //alert - answer is incorrect, time left after deduction is:
-  //}
-  answerQuestion();
+var checkAnswer = function (event) {
+  event.preventDefault();
+  if (qCounter < quizQuestions.length){
+    if (document.querySelector('input[name="radioGroup"]:checked').value === quizQuestions[qCounter-1].correctAnswer){
+      //add points to score
+      score+=20;
+      //increment numberCorrect
+      numberCorrect++;
+      console.log(score);
+    } else {
+      //if incorrect, deduct time from timer
+      //alert - answer is incorrect, time left after deduction is:
+      window.alert("Your answer is incorrect.");
+    }
+    answerQuestion();
+  } else {
+    if (document.querySelector('input[name="radioGroup"]:checked').value === quizQuestions[qCounter-1].correctAnswer){
+      //add points to score
+      score+=20;
+      //increment numberCorrect
+      numberCorrect++;
+    } else {
+      //if incorrect, deduct time from timer
+      //alert - answer is incorrect, time left after deduction is:
+      window.alert("Your answer is incorrect.");
+    }
+    endQuiz();
+  }
+  
 }
 
 var endQuiz = function () {
@@ -127,7 +151,24 @@ var endQuiz = function () {
   var divEl = document.createElement("div");
   divEl.className = "endScreen";
   divEl.innerHTML =
-  "<h2 class='endScreen'>You've finished the Quiz!</h2><br /><h3 class='endScreen'>Your score is " + (score-=20) + "!</h3>";
+  "<h2 class='endScreen'>You've finished the Quiz!</h2><br /><h3 class='endScreen'>You got " + (numberCorrect-1) + " out of 5 correct!</h3><br /><h3 class='endScreen'>Your score is " + (score-=20) + "!</h3>";
+  document.getElementById("quizForm").after(divEl);
+
+  // check localStorage for high score, if it's not there, use 0
+  var highScore = localStorage.getItem("highscore");
+  if (highScore === null) {
+    highScore = 0;
+  }
+  // if player has more money than the high score, player has new high score!
+  if (score > highScore) {
+    localStorage.setItem("highscore", score);
+    localStorage.setItem("name", window.prompt("What's your name?"));
+
+    alert(localStorage.getItem("name") + " now has the high score of " + highScore + "!");
+  } 
+  else {
+    alert("You did not beat the high score of " + highScore + ". Maybe next time!");
+  }
 }
 
 var answerQuestion = function () {
@@ -139,17 +180,13 @@ var answerQuestion = function () {
     //increment question counter
     qCounter++;
     console.log(qCounter);
-  } else if (qCounter > 0 && qCounter < quizQuestions.length) {
+  } else {
+    //if (qCounter > 0 && qCounter < quizQuestions.length)
     //load question
     displayQuestion();
     //increment question counter
-    if (qCounter < quizQuestions.length-1) {
-      qCounter++;
-      console.log(qCounter);
-    }
-  } else {
-    qCounter = 0;
-    endQuiz();
+    qCounter++;
+    console.log(qCounter);
   }
   //event listener for submit answer button
   submitAnswer.addEventListener("click", checkAnswer);
