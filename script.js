@@ -6,7 +6,7 @@
 //add points if correct
 //deduct time if wrong
 //save score if high score in localStorage
-var qCounter = 1;
+var qCounter = 0;
 var score = 0;
 var submitAnswer = document.querySelector("#save-task");
 var quizQuestions = [
@@ -147,8 +147,10 @@ var answerQuestion = function () {
     //event listener for submit answer button
     submitAnswer.addEventListener("submit", checkAnswer);
     //increment question counter
-    qCounter++;
-    console.log(qCounter);
+    if (qCounter < quizQuestions.length-1) {
+      qCounter++;
+      console.log(qCounter);
+    }
   } else {
     qCounter = 0;
     endQuiz();
