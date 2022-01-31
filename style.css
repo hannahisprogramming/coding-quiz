@@ -82,6 +82,33 @@ main {
   align-items: center;
 }
 
+.endScreen {
+  background-color: var(--white);
+  margin: 20px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.endScreen div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.endScreen h2 {
+  font-size: 1.3em;
+  color: var(--grey);
+}
+
+.endScreen h2 {
+  font-size: 1.2em;
+  color: var(--secondary);
+}
+
 .flex {
   display: flex;
   flex-wrap: wrap;
