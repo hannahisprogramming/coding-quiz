@@ -43,6 +43,11 @@ header p {
   color: var(--white);
 }
 
+#start {
+  display: flex;
+  justify-content: center;
+}
+
 main {
   background-color: var(--primary);
   margin: 20px;

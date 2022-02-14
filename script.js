@@ -7,16 +7,13 @@
 //deduct time if wrong
 //save score if high score in localStorage
 var qCounter = 0;
+var timer = 100;
+var timerObj = {};
+var htmlTimer = document.getElementById("timer");
 var score = 0;
 var numberCorrect = 0;
 var submitAnswer = document.querySelector("#submitAn");
 var quizQuestions = [
-  {
-    question: "Are you ready to start the quiz?",
-    answer1: "no",
-    answer2: "yes",
-    correctAnswer: "yes"
-  },
   {
     question: "What are the two scopes of variables in Javascript?",
     answerA: "Abroad and Local",
@@ -59,29 +56,7 @@ var quizQuestions = [
   }
 ];
 
-var startQuestion = function() {
-  //set h2 element to start question
-  var h2Label = document.querySelector('#questionH2');
-  h2Label.textContent = (quizQuestions[qCounter].question);
-
-  //set radio options for yes and no
-  var label = document.querySelector('#labelA');
-  label.textContent = (quizQuestions[qCounter].answer1);
-  document.getElementById("answerA").value = (quizQuestions[qCounter].answer1);
-  label = document.querySelector('#labelB');
-  label.textContent = (quizQuestions[qCounter].answer2);
-  document.getElementById("answerB").value = (quizQuestions[qCounter].answer2);
-
-  //hide unused radio elements and labels
-  document.getElementById("C").style.display = "none";
-  document.getElementById("D").style.display = "none";
-}
-
 var quizQuestion = function() {
-  //remove display:none from questions C & D
-  document.getElementById("C").style.display = "flex";
-  document.getElementById("D").style.display = "flex";
-
   //set h2 element here
   var h2Label = document.querySelector('#questionH2');
   h2Label.textContent = (quizQuestions[qCounter].question);
@@ -102,14 +77,7 @@ var quizQuestion = function() {
 }
 
 var displayQuestion = function () {
-  console.log(qCounter);
-  if (qCounter === 0){
-    //set ready to start question
-    startQuestion();
-  } else {
-    //set quiz question
-    quizQuestion();
-  }
+  quizQuestion();
 };
 
 //check if answer is correct
@@ -124,6 +92,7 @@ var checkAnswer = function (event) {
       console.log(score);
     } else {
       //if incorrect, deduct time from timer
+      timer-=5;
       //alert - answer is incorrect, time left after deduction is:
       window.alert("Your answer is incorrect.");
     }
@@ -136,15 +105,19 @@ var checkAnswer = function (event) {
       numberCorrect++;
     } else {
       //if incorrect, deduct time from timer
+      timer-=5;
       //alert - answer is incorrect, time left after deduction is:
       window.alert("Your answer is incorrect.");
     }
+    htmlTimer.textContent = "Great work, you have " + timer + " seconds left.";
     endQuiz();
   }
   
 }
 
 var endQuiz = function () {
+  clearInterval(timerObj);
+
   //hide quiz question div
   document.getElementById("quizForm").style.display = "none";
   //display end screen with score
@@ -171,6 +144,8 @@ var endQuiz = function () {
   }
 }
 
+var startBtn = document.getElementById("startBtn");
+
 var answerQuestion = function () {
   if (qCounter === 0){
     //load question
@@ -192,4 +167,18 @@ var answerQuestion = function () {
   submitAnswer.addEventListener("click", checkAnswer);
 };
 
-answerQuestion();
+startBtn.addEventListener("click", function(){
+  document.getElementById("start").style.display="none";
+  document.getElementById("page-content").style.display="flex";
+  qCounter=0;
+  timerObj = setInterval(function(){
+    htmlTimer.textContent = "Time left: " + timer;
+    if (timer > 1) {
+      timer--;
+    } else {
+      htmlTimer.textContent = "Time's up!";
+      endQuiz();
+    }
+  },1000);
+  answerQuestion();
+});

@@ -14,8 +14,15 @@
     <h1 class="page-title">Coding Quiz</h1>
     <p>Get ready for a quiz on Javascript!</p>
   </header>
+  <section id="start">
+    <h2>Are you ready to start the quiz?</h2>
+    <button id="startBtn">Start!</button>
+  </section>
+  <div style="display: flex;">
+    <p id="timer">Time left: </p>
+  </div>
 
-  <main id="page-content">
+  <main id="page-content" style="display: none;">
     <form class = "quizForm" id="quizForm">
       <div class="quizForm">
         <h2 class="quizForm" id="questionH2"></h2>
@@ -45,6 +52,7 @@
         <button class="btn" id="submitAn">Submit Answer</button>
       </div>
     </form>
+    <!-- <a href="scores.html"></a>--> 
   </main>
 
   <script src="./script.js"></script>
